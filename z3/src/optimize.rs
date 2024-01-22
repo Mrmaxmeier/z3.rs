@@ -184,6 +184,16 @@ impl<'ctx> Optimize<'ctx> {
         objectives
     }
 
+    pub fn get_lower(&self, idx: u32) -> Dynamic<'ctx> {
+        let elem = unsafe { Z3_optimize_get_lower(self.ctx.z3_ctx, self.z3_opt, idx) };
+        unsafe { Dynamic::wrap(self.ctx, elem) }
+    }
+
+    pub fn get_upper(&self, idx: u32) -> Dynamic<'ctx> {
+        let elem = unsafe { Z3_optimize_get_upper(self.ctx.z3_ctx, self.z3_opt, idx) };
+        unsafe { Dynamic::wrap(self.ctx, elem) }
+    }
+
     /// Retrieve a string that describes the last status returned by [`Optimize::check()`].
     ///
     /// Use this method when [`Optimize::check()`] returns [`SatResult::Unknown`].
